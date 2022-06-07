@@ -48,8 +48,10 @@ const renderRow = () => {
 const CharacterInformation = () => {
     return <div></div>;
 };
-const withComponent = (Component: any) => {
-    return <Component addition={{ suffix: '12' }}></Component>;
+const withComponent = () => {
+    return (Component: any) => {
+        return <Component addition={{ suffix: '12' }}></Component>;
+    };
 };
 type TextProps = {
     children: string;
@@ -70,7 +72,7 @@ function Text(props: TextProps & { truncate?: boolean; expanded?: boolean }) {
         </div>
     );
 }
-const CharacterInformationWithCharacter = withComponent(CharacterInformation);
+const CharacterInformationWithCharacter = withComponent()(CharacterInformation);
 const App = () => {
     const context = React.useContext(ThemeContext);
     console.log('context', context);
@@ -117,7 +119,7 @@ const App = () => {
 
     // Inferred Type: "b" | "c"
     type Intersection = A & B;
-
+    type Intersection1 = A | B;
     type Wrap<T> = T extends { length: number } ? [T] : T;
     type IsAssignableTo<A, B> = A extends B ? true : false;
 
@@ -185,6 +187,31 @@ const App = () => {
     //Omit Pick
     type pickObj = Pick<obj1, 'a' | 'b'>;
     type OmitObj = Omit<obj1, 'c'>;
+    type dataObj = {
+        [key: string | number]: null | string | number | string[] | number[] | dataObj[];
+    };
+    const data: dataObj[] = [
+        {
+            a: 'A',
+            b: 'B',
+            list: [
+                {
+                    label: '1',
+                    value: '1',
+                },
+                {
+                    a: 'A',
+                    b: 'B',
+                    list: [
+                        {
+                            label: '1',
+                            value: '1',
+                        },
+                    ],
+                },
+            ],
+        },
+    ];
     return (
         <div
             style={{
